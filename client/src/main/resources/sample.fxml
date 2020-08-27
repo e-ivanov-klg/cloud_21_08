@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane alignment="center" hgap="10" prefHeight="470.0" prefWidth="540.0" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <AnchorPane prefHeight="470.0" prefWidth="540.0" GridPane.columnIndex="1">
+         <children>
+            <Label layoutY="10.0" text="Client:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <Label layoutY="40.0" text="../">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label layoutY="40.0" layoutX="270" text="../">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label layoutY="10.0" layoutX="270" text="Server:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Label>
+            <ListView fx:id="clientFileList" layoutY="70" prefHeight="350.0" prefWidth="250.0" />
+            <ListView fx:id="serverFileList" layoutX="270.0" layoutY="70" prefHeight="350.0" prefWidth="250.0" />
+            <Button fx:id="uploadBtn" layoutY="430.0" mnemonicParsing="false" onAction="#uploadBtnClick" prefHeight="25.0" prefWidth="60.0" text="Upload" />
+            <Button fx:id="downloadBtn" layoutY="430.0" layoutX="440.0" mnemonicParsing="false" onAction="#downloadBtnClick" prefHeight="25.0" prefWidth="80.0" text="Download" />
+         </children>
+      </AnchorPane>
+   </children>
+ </GridPane>

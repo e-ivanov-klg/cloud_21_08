@@ -1,0 +1,2 @@
+<TextField fx:id="clientText" layoutY="366.0" prefHeight="25.0" prefWidth="182.0" promptText="Введите текст.." />
+<Button fx:id="clientBackFolder" mnemonicParsing="false" onAction="#sendMessage" prefHeight="25.0" prefWidth="60.0" text="<- Back" />
