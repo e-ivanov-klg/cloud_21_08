@@ -1,20 +1,12 @@
-import com.sun.org.omg.CORBA.Initializer;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import sun.java2d.SurfaceDataProxy;
+import javafx.scene.control.*;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable {
     public ListView<String> clientFileList;
@@ -94,19 +86,36 @@ public class Controller implements Initializable {
                         }
                         break;
                     case "./download":
-                        String fileName = is.readUTF();
+                        message = is.readUTF();
+                        String [] buffer = message.split(" ");
+                        String fileName = buffer[0];
                         long fileLength = is.readLong();
-                        File file = new File (clientPath + "/" + fileName);
-                        file.createNewFile();
+                        File file = new File(clientPath + "/" + fileName);
+                        if (file.exists()) {
+                            ChangeFileDialog dialog = new ChangeFileDialog(file);
+                            Platform.runLater(dialog);
+                            while (dialog.getResult() == null) {}
+                            if (dialog.getResult().isPresent() && dialog.getResult().get().getText().equals("Replace")) {
+                                try {
+                                    file.delete();
+                                    file.createNewFile();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            } else {
+                                String [] fileNameParams = fileName.split("\\.");
+                                file = new File(clientPath + "/" + fileNameParams[0] + "_copy." + fileNameParams[1]);
+                            }
+                        }
                         FileOutputStream fos = new FileOutputStream(file);
-                        byte[] buffer = new byte[256];
+                        byte[] dataBuffer = new byte[256];
                         if (fileLength < 256) {
                          fileLength += 256;
                         }
                         int read = 0;
                         for (int i = 0; i < fileLength / 256; i++) {
-                            read = is.read(buffer);
-                            fos.write(buffer, 0, read);
+                            read = is.read(dataBuffer);
+                            fos.write(dataBuffer, 0, read);
                         }
                         Platform.runLater(new Runnable() {
                             @Override
